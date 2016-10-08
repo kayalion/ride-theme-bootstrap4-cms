@@ -45,40 +45,13 @@
         {/if}
         </div>
         <div class="col-md-4">
+            {$visibilityAction = null}
             {if isset($nodeActions.visibility)}
-                <a class="node-visibility pull-right" href="{$nodeActions.visibility}">
-            {else}
-                <div class="pull-right">
-            {/if}
-            {foreach $app.locales as $localeCode => $locale}
-                {if $node->isAvailableInLocale($localeCode)}
-                    <span class="tag tag-success" title="{translate key="label.node.tooltip.localized" language=$locale->getName()}">{$localeCode}</span>
-                {else}
-                    <span class="tag tag-danger" title="{translate key="label.node.tooltip.unlocalized" language=$locale->getName()}">{$localeCode}</span>
-                {/if}
-            {/foreach}
-
-            &nbsp;
-
-            {if $node->isPublished()}
-                <span class="fa fa-eye text-success" title="{translate key="label.node.tooltip.published"}"></span>
-            {else}
-                <span class="fa fa-eye-slash text-danger" title="{translate key="label.node.tooltip.unpublished"}"></span>
+                {$visibilityAction = $nodeActions.visibility}
             {/if}
 
-            &nbsp;
-
-            {if $node->getSecurity() === false}
-                <span class="fa fa-unlock text-success" title="{translate key="label.node.tooltip.unsecured"}"></span>
-            {else}
-                <span class="fa fa-lock text-warning" title="{translate key="label.node.tooltip.secured"}"></span>
-            {/if}
-
-            {if isset($nodeActions.visibility)}
-                </a>
-            {else}
-                </div>
-            {/if}
+            {include "helper/cms/common"}
+            {call visibilityIcons class="node-visibility pull-right" url=$visibilityAction item=$node}
         </div>
     </div>
     {/if}

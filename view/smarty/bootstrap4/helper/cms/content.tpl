@@ -83,8 +83,8 @@
 {/function}
 
 {function name="widgetPanel" site=null node=null widget=null widgetId=null inheritedWidgets=$inheritedWidgets actions=$actions}
-<div class="widget {if isset($inheritedWidgets[$widgetId])} inherited{/if} card p-l-1 p-t-1 p-r-1 p-b-1" data-widget="{$widgetId}">
-    <div class="widget-header clearfix">
+<div class="widget card {if isset($inheritedWidgets[$widgetId])} inherited{/if} card p-l-1 p-t-1 p-r-1 p-b-1" data-widget="{$widgetId}">
+    <div class="widget-header card-header clearfix">
         {$widgetName = "widget.`$widget->getName()`"|translate}
         {$widgetProperties = $widget->getProperties()}
         {$widgetActions = []}
@@ -105,6 +105,7 @@
             {$widgetDeleteAction = $actionUrl}
         {/isGranted}
 
+    <div class="clearfix">
         {if $widgetActions || $widgetDeleteAction}
         <div class="btn-group pull-right">
             <div class="btn-group">
@@ -147,8 +148,16 @@
         </div>
         {/if}
 
+        {$visibilityAction = null}
+        {if isset($widgetActions.visibility)}
+            {$visibilityAction = $widgetActions.visibility}
+        {/if}
+
         <span class="widget-handle fa fa-arrows m-r-1"></span>
-        <span class="widget-title text-left">
+    </div>
+        <div class="widget-title text-left">
+            {call visibilityIcons class="widget-visibility pull-right m-l-1" url=$visibilityAction item=$widgetProperties}
+
             <img src="{image src=$widget->getIcon() default="bootstrap4/img/widget.png"}" />
             {if $widget->getPropertiesCallback()}
                 <a class="name" href="{url id="cms.node.content.widget.properties" parameters=["site" => $site->getId(), "revision" => $node->getRevision(), "node" => $node->getId(), "locale" => $locale, "region" => $region, "section" => $section, "block" => $block, "widget" => $widgetId]}">
@@ -157,7 +166,7 @@
             {else}
                 <span class="name">{$widgetName}</span>
             {/if}
-        </span>
+        </div>
     </div>
     <div class="widget__content">
         {$widget->getPropertiesPreview()}
