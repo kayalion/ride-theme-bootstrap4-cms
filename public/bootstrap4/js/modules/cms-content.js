@@ -299,7 +299,9 @@ rideCms.content = (function($, undefined) {
   };
 
   var handleModalSubmit = function(e) {
-    e.preventDefault();
+    if (e) {
+      e.preventDefault();
+    }
 
     var $loadingElement = $modalAction.find('.modal-body,.modal-footer');
 
