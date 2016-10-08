@@ -2,14 +2,14 @@
 <div class="row">
     {$class="col-md-3"}
     {$block = '1'}
-    {call layoutBlock site=$site node=$node section=$section block=$block class=$class inheritedWidgets=$inheritedWidgets actions=$actions}
+    {call layoutBlock site=$site node=$node section=$section block=$block class=$class widgets=$widgets inheritedWidgets=$inheritedWidgets actions=$actions}
 
     {$class="col-md-7"}
     {$block = '2'}
-    {call layoutBlock site=$site node=$node section=$section block=$block class=$class inheritedWidgets=$inheritedWidgets actions=$actions}
+    {call layoutBlock site=$site node=$node section=$section block=$block class=$class widgets=$widgets inheritedWidgets=$inheritedWidgets actions=$actions}
 
     {$class="col-md-2"}
     {$block = '3'}
-    {call layoutBlock site=$site node=$node section=$section block=$block class=$class inheritedWidgets=$inheritedWidgets actions=$actions}
+    {call layoutBlock site=$site node=$node section=$section block=$block class=$class widgets=$widgets inheritedWidgets=$inheritedWidgets actions=$actions}
 </div>
 {/function}

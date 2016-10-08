@@ -55,6 +55,7 @@
 .block-content {
     min-height: 3em;
     margin-bottom: 4em;
+    height: 100%;
 }
 
 .block-actions {
