@@ -3,6 +3,6 @@
     {$class="col-md-12"}
 
     {$block = '1'}
-    {call layoutBlock site=$site node=$node section=$section block=$block class=$class inheritedWidgets=$inheritedWidgets[$block] actions=$actions}
+    {call layoutBlock site=$site node=$node section=$section block=$block class=$class inheritedWidgets=$inheritedWidgets actions=$actions}
 </div>
 {/function}

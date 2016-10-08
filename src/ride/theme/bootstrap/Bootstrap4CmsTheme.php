@@ -17,6 +17,7 @@ class Bootstrap4CmsTheme extends Bootstrap4Theme implements Theme {
         'content' => 'content',
         'header' => 'header',
         'menu' => 'menu',
+        'title' => 'title',
         'footer' => 'footer',
     );
 

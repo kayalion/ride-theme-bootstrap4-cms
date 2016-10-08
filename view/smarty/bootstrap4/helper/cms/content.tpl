@@ -32,12 +32,16 @@
             <a class="btn btn-secondary btn-sm btn-modal section-properties" data-action="section-properties" href="{url id="cms.node.content.section.properties" parameters=["site" => $site->getId(), "revision" => $node->getRevision(), "node" => $node->getId(), "locale" => $locale, "region" => $region, "section" => $section]}?referer={$app.url.request|urlencode}" title="{translate key="label.widget.action.properties"}">
                 <span class="fa fa-cog{if $node->isSectionFullWidth($region, $section)} text-primary{/if}"></span>
             </a>
+            {isGranted permission="cms.region.`$node->getTheme()`.`$region`.section.style"}
             <a class="btn btn-secondary btn-sm btn-modal section-style" data-action="section-style" href="{url id="cms.node.content.section.style" parameters=["site" => $site->getId(), "revision" => $node->getRevision(), "node" => $node->getId(), "locale" => $locale, "region" => $region, "section" => $section]}?referer={$app.url.request|urlencode}" title="{translate key="label.widget.action.style"}">
                 <span class="fa fa-paint-brush{if $node->getSectionStyle($region, $section)} text-primary{/if}"></span>
             </a>
+            {/isGranted}
+            {isGranted permission="cms.region.`$node->getTheme()`.`$region`.section.manage"}
             <a class="btn btn-secondary btn-sm section-delete" href="#" data-confirm="{"label.confirm.section.delete"|translate|escape}" title="{translate key="button.delete"}">
                 <span class="fa fa-remove"></span>
             </a>
+            {/isGranted}
         </div>
     </div>
 </div>
@@ -59,8 +63,13 @@
 <div class="{$class} block" id="block-{$section}-{$block}" data-section="{$section}" data-block="{$block}">
     <div class="block-content">
 {if isset($widgets[$block])}
+    {$blockInheritedWidgets = []}
+    {if isset($inheritedWidgets[$block])}
+        {$blockInheritedWidgets = $inheritedWidgets[$block]}
+    {/if}
+
     {foreach $widgets[$block] as $widgetId => $widget}
-        {call widgetPanel site=$site node=$node widget=$widget widgetId=$widgetId inheritedWidgets=$inheritedWidgets[$block] actions=$actions}
+        {call widgetPanel site=$site node=$node widget=$widget widgetId=$widgetId inheritedWidgets=$blockInheritedWidgets actions=$actions}
     {/foreach}
 {/if}
     </div>

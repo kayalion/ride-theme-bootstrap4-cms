@@ -42,12 +42,16 @@
             <span class="fa fa-spinner fa-pulse fa-2x"></span>
         </div>
 
+        {isGranted permission="cms.region.`$node->getTheme()`.`$region`.section.manage" var="allowSectionManage"}{/isGranted}
+
+        {if $allowSectionManage}
         <p>
             <button class="btn btn-secondary section-add">
                 <span class="fa fa-plus"></span>
                 {translate key="button.section.add"}
             </button>
         </p>
+        {/if}
 
         <div class="sections"
              data-url="{$baseAction}"
@@ -73,12 +77,14 @@
     {/foreach}
         </div>
 
+        {if $allowSectionManage}
         <p>
             <button class="btn btn-secondary section-add">
                 <span class="fa fa-plus"></span>
                 {translate key="button.section.add"}
             </button>
         </p>
+        {/if}
     </div>
 
     <div class="modal modal-widget-add fade" id="modalWidgetAdd" tabindex="-1" role="dialog" aria-labelledby="modalWidgetAddLabel" aria-hidden="true">
