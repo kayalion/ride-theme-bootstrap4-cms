@@ -271,7 +271,14 @@ rideCms.content = (function($, undefined) {
       $.post($form.attr('action'), formValues, function () {
         switch (action) {
           case 'section-properties':
-            $sections.find('.section[data-section="' + section + '"] .section-title').html($form.find('input[name=title]').val());
+            var $sectionProperties = $sections.find('.section[data-section="' + section + '"] .section-properties').first();
+
+            var sectionTitle = $form.find('input[name=title]').val();
+            var sectionLink = '<a class="btn-modal" href="' + $sectionProperties.attr('href') + '">' + sectionTitle + '</a>';
+
+            $sections.find('.section[data-section="' + section + '"] .section-title').html(sectionLink);
+
+            initModalActions();
 
             if ($form.find('input[name=isFullWidth]').prop('checked')) {
               $sections.find('.section[data-section="' + section + '"] .section-properties .fa').addClass('text-primary');

@@ -47,7 +47,9 @@
 </div>
 <div class="section-title">
 {if $sectionTitle}
-    {$sectionTitle}
+    <a class="btn-modal section-properties" data-action="section-properties" href="{url id="cms.node.content.section.properties" parameters=["site" => $site->getId(), "revision" => $node->getRevision(), "node" => $node->getId(), "locale" => $locale, "region" => $region, "section" => $section]}?referer={$app.url.request|urlencode}" title="{translate key="label.widget.action.properties"}">
+        {$sectionTitle}
+    </a>
 {/if}
 </div>
 {/function}

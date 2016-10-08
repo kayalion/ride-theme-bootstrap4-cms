@@ -3,29 +3,25 @@
   cursor: move;
 }
 
-.section-title {
-  font-weight: bold;
-}
-
 .sections .placeholder {
-    min-height: 100px;
-    margin-bottom: 1em;
+  min-height: 100px;
+  margin-bottom: 1em;
 }
 
 .section-layouts a {
-    text-decoration: none;
+  text-decoration: none;
 }
 
 .layout-active img {
-    border: 2px solid #0275d8;
+  border: 2px solid #0275d8;
 }
 
 .section .card-block {
-    padding: 0 0 0 1em;
+  padding: 0 0 0 1em;
 }
 
 .section .card-block .section-content {
-    margin-right: -1em;
+  margin-right: -1em;
 }
 
 .section .card-block .row {
@@ -40,32 +36,32 @@
 }
 
 .block {
-    padding-top: 1em;
-    border-right: 1px solid #CCC;
+  padding-top: 1em;
+  border-right: 1px solid #CCC;
 }
 
 .block:last-child {
-    border-right: 0;
+  border-right: 0;
 }
 
 .block .widget-add {
-    margin-bottom: 1em;
+  margin-bottom: 1em;
 }
 
 .block-content {
-    min-height: 3em;
-    margin-bottom: 4em;
-    height: 100%;
+  min-height: 3em;
+  margin-bottom: 4em;
+  height: 100%;
 }
 
 .block-actions {
-    position: absolute;
-    width: 100%;
-    bottom: 0;
-    left: 0;
-    padding: 0 1em;
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  padding: 0 1em;
 }
 
 .widget-header {
-    margin: -1em -1em 1em -1em;
+  margin: -1em -1em 1em -1em;
 }
