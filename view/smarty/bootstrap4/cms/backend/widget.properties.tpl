@@ -29,5 +29,7 @@
 {/block}
 
 {block name="content_body" append}
+    {include file="helper/form.prototype"}
+
     {include file=$propertiesTemplate inline}
 {/block}

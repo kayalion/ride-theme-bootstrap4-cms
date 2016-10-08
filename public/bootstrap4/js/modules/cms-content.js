@@ -248,6 +248,11 @@ rideCms.content = (function($, undefined) {
       });
     });
 
+    // focus first field when action modal is shown
+    $modalAction.on('shown.bs.modal', function () {
+      $modalAction.find('input[type=text]').first().focus();
+    });
+
     // submit form of action modal
     $modalActionButtons.on('click', function (e) {
       e.preventDefault();
@@ -256,77 +261,7 @@ rideCms.content = (function($, undefined) {
         return;
       }
 
-      var $loadingElement = $modalAction.find('.modal-body,.modal-footer');
-
-      setLoading(true, $loadingElement);
-      setLoading(true);
-
-      var action = $modalAction.data('action');
-      var section = $modalAction.data('section');
-      var widget = $modalAction.data('widget');
-
-      var $form = $modalAction.find('form');
-      var formValues = $form.serialize();
-
-      $.post($form.attr('action'), formValues, function () {
-        switch (action) {
-          case 'section-properties':
-            var $sectionProperties = $sections.find('.section[data-section="' + section + '"] .section-properties').first();
-
-            var sectionTitle = $form.find('input[name=title]').val();
-            var sectionLink = '<a class="btn-modal" href="' + $sectionProperties.attr('href') + '">' + sectionTitle + '</a>';
-
-            $sections.find('.section[data-section="' + section + '"] .section-title').html(sectionLink);
-
-            initModalActions();
-
-            if ($form.find('input[name=isFullWidth]').prop('checked')) {
-              $sections.find('.section[data-section="' + section + '"] .section-properties .fa').addClass('text-primary');
-            } else {
-              $sections.find('.section[data-section="' + section + '"] .section-properties .fa').removeClass('text-primary');
-            }
-
-            break;
-          case 'section-style':
-            if ($form.find('input[name=style]').val()) {
-              $sections.find('.section[data-section="' + section + '"] .section-style .fa').addClass('text-primary');
-            } else {
-              $sections.find('.section[data-section="' + section + '"] .section-style .fa').removeClass('text-primary');
-            }
-
-            break;
-          case 'widget-style':
-            var value = '';
-            $form.find('input[type=text]').each(function() {
-              value += $(this).val();
-            });
-
-            if (value != '') {
-              $sections.find('.widget[data-widget="' + widget + '"] .widget-style .fa').addClass('text-primary');
-            } else {
-              $sections.find('.widget[data-widget="' + widget + '"] .widget-style .fa').removeClass('text-primary');
-            }
-
-            break;
-        };
-
-        $modalAction.modal('hide');
-
-        setLoading(false, $loadingElement);
-        setLoading(false);
-
-        if (widget) {
-          rideApp.common.notifySuccess($sections.data('label-success-widget-save'));
-        } else {
-          rideApp.common.notifySuccess($sections.data('label-success-section-save'));
-        }
-      }).fail(function() {
-        if (widget) {
-         rideApp.common.notifySuccess($sections.data('label-error-widget-save'));
-        } else {
-          rideApp.common.notifySuccess($sections.data('label-error-section-save'));
-        }
-      });
+      handleModalSubmit();
     });
 
     initModalActions();
@@ -334,7 +269,7 @@ rideCms.content = (function($, undefined) {
   };
 
   // open modal actions in action modal
-  var initModalActions = function () {
+  var initModalActions = function() {
     $sections.find('.btn-modal:not(.is-initialized)').addClass('is-initialized').on('click', function (e) {
       e.preventDefault();
 
@@ -354,6 +289,7 @@ rideCms.content = (function($, undefined) {
       $modalAction.find('.modal-body').load(href + ' form', function () {
         $modalAction.find('.modal-title').text($action.attr('title'));
         $modalAction.find('.form-actions').hide();
+        $modalAction.find('form[role=form]').on('submit', handleModalSubmit);
 
         $modalAction.modal('show');
 
@@ -361,6 +297,84 @@ rideCms.content = (function($, undefined) {
       });
     });
   };
+
+  var handleModalSubmit = function(e) {
+    e.preventDefault();
+
+    var $loadingElement = $modalAction.find('.modal-body,.modal-footer');
+
+    setLoading(true, $loadingElement);
+    setLoading(true);
+
+    var action = $modalAction.data('action');
+    var section = $modalAction.data('section');
+    var widget = $modalAction.data('widget');
+
+    var $form = $modalAction.find('form');
+    var formValues = $form.serialize();
+
+    $.post($form.attr('action'), formValues, function () {
+      switch (action) {
+        case 'section-properties':
+          var $sectionProperties = $sections.find('.section[data-section="' + section + '"] .section-properties').first();
+
+          var sectionTitle = $form.find('input[name=title]').val();
+          var sectionLink = '<a class="btn-modal" href="' + $sectionProperties.attr('href') + '">' + sectionTitle + '</a>';
+
+          $sections.find('.section[data-section="' + section + '"] .section-title').html(sectionLink);
+
+          initModalActions();
+
+          if ($form.find('input[name=isFullWidth]').prop('checked')) {
+            $sections.find('.section[data-section="' + section + '"] .section-properties .fa').addClass('text-primary');
+          } else {
+            $sections.find('.section[data-section="' + section + '"] .section-properties .fa').removeClass('text-primary');
+          }
+
+          break;
+        case 'section-style':
+          if ($form.find('input[name=style]').val()) {
+            $sections.find('.section[data-section="' + section + '"] .section-style .fa').addClass('text-primary');
+          } else {
+            $sections.find('.section[data-section="' + section + '"] .section-style .fa').removeClass('text-primary');
+          }
+
+          break;
+        case 'widget-style':
+          var value = '';
+          $form.find('input[type=text]').each(function() {
+            value += $(this).val();
+          });
+
+          if (value != '') {
+            $sections.find('.widget[data-widget="' + widget + '"] .widget-style .fa').addClass('text-primary');
+          } else {
+            $sections.find('.widget[data-widget="' + widget + '"] .widget-style .fa').removeClass('text-primary');
+          }
+
+          break;
+      };
+
+      $modalAction.modal('hide');
+
+      setLoading(false, $loadingElement);
+      setLoading(false);
+
+      if (widget) {
+        rideApp.common.notifySuccess($sections.data('label-success-widget-save'));
+      } else {
+        rideApp.common.notifySuccess($sections.data('label-success-section-save'));
+      }
+    }).fail(function() {
+      if (widget) {
+       rideApp.common.notifySuccess($sections.data('label-error-widget-save'));
+      } else {
+        rideApp.common.notifySuccess($sections.data('label-error-section-save'));
+      }
+    });
+
+    return false;
+  }
 
   // initialize the sortable for the widgets
   var initWidgetOrder = function (baseUrl, reset) {
@@ -450,7 +464,7 @@ rideCms.content = (function($, undefined) {
     setLoading(true);
     setLoading(true, $loadingElement);
 
-	$.post(baseUrl + '/sections/' + section + '/block/' + block + '/widget/' + widget, function(html) {
+	  $.post(baseUrl + '/sections/' + section + '/block/' + block + '/widget/' + widget, function(html) {
       $block.find('.block-content').append(html);
 
       initModalActions();
