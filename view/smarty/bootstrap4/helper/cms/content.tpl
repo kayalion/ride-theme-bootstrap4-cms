@@ -153,7 +153,7 @@
             {$visibilityAction = $widgetActions.visibility}
         {/if}
 
-        <span class="widget-handle fa fa-arrows m-r-1"></span>
+        <span class="widget-handle fa fa-arrows"></span>
     </div>
         <div class="widget-title text-left">
             {call visibilityIcons class="widget-visibility pull-right m-l-1" url=$visibilityAction item=$widgetProperties}

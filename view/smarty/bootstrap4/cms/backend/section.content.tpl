@@ -1,3 +1,4 @@
+{include file="helper/cms/common"}
 {include file="helper/cms/content"}
 {include file=$layout->getBackendResource()}
 
