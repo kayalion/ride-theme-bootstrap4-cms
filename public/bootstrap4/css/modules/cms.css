@@ -1,6 +1,6 @@
 @import url(cms-tree.css);
 @import url(cms-content.css);
 
-.page-header .node-visibility:hover {
+.visibility-icons:hover {
     text-decoration: none;
 }

@@ -14,6 +14,14 @@ rideCms.content = (function($, undefined) {
   var baseUrl = $sections.data('url');
 
   var _initialize = function() {
+    $(window).keydown(function(e) {
+      if (e.keyCode == 13) {
+        e.preventDefault();
+
+        return false;
+      }
+    });
+
     // auto submit region change
     $document.on('change', 'select[name=region]', function() {
       setLoading(true);
@@ -162,7 +170,13 @@ rideCms.content = (function($, undefined) {
       if (e.which == 13) {
         e.preventDefault();
 
-        return false;
+        if ($widgets.find('input[type=radio]:visible').filter(':checked').length == 1) {
+          widgetAdd();
+
+          $modalWidgetAdd.modal('hide');
+        }
+
+        return;
       }
 
       var regexp = new RegExp($widgetFilter.val(), 'i');
@@ -290,6 +304,11 @@ rideCms.content = (function($, undefined) {
         $modalAction.find('.modal-title').text($action.attr('title'));
         $modalAction.find('.form-actions').hide();
         $modalAction.find('form[role=form]').on('submit', handleModalSubmit);
+        $modalAction.find('form[role=form]').on('keydown', function(e) {
+          if (e.keyCode == 13) {
+            handleModalSubmit();
+          }
+        });
 
         $modalAction.modal('show');
 
@@ -369,7 +388,7 @@ rideCms.content = (function($, undefined) {
       }
     }).fail(function() {
       if (widget) {
-       rideApp.common.notifySuccess($sections.data('label-error-widget-save'));
+        rideApp.common.notifySuccess($sections.data('label-error-widget-save'));
       } else {
         rideApp.common.notifySuccess($sections.data('label-error-section-save'));
       }
@@ -479,6 +498,9 @@ rideCms.content = (function($, undefined) {
     }).fail(function() {
       rideApp.common.notifyError($sections.data('label-error-widget-add'));
     });
+
+    $widgets.show();
+    $widgetFilter.val('');
   };
 
   var setLoading = function(isLoading, $element) {

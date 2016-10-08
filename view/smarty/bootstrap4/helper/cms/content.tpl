@@ -85,31 +85,36 @@
 {/function}
 
 {function name="widgetPanel" site=null node=null widget=null widgetId=null inheritedWidgets=$inheritedWidgets actions=$actions}
-<div class="widget card {if isset($inheritedWidgets[$widgetId])} inherited{/if} card p-l-1 p-t-1 p-r-1 p-b-1" data-widget="{$widgetId}">
-    <div class="widget-header card-header clearfix">
-        {$widgetName = "widget.`$widget->getName()`"|translate}
-        {$widgetProperties = $widget->getProperties()}
-        {$widgetActions = []}
-        {$widgetDeleteAction = null}
+    {$widgetName = $widget->getName()}
+    {$widgetTitle = "widget.`$widgetName`"|translate}
+    {$widgetProperties = $widget->getProperties()}
+    {$widgetActions = []}
+    {$widgetDeleteAction = null}
 
-        {$actionsAvailable = false}
-        {foreach $actions as $actionName => $action}
-            {if $action->isAvailableForWidget($node, $widget)}
-                {url var="actionUrl" id=$action->getRoute() parameters=["site" => $site->getId(), "revision" => $node->getRevision(), "node" => $node->getId(), "locale" => $locale, "region" => $region, "section" => $section, "block" => $block, "widget" => $widgetId]}
-                {isGranted url=$actionUrl}
-                    {$widgetActions[$actionName] = $actionUrl}
-                {/isGranted}
+    {foreach $actions as $actionName => $action}
+        {if $action->isAvailableForWidget($node, $widget)}
+            {url var="actionUrl" id=$action->getRoute() parameters=["site" => $site->getId(), "revision" => $node->getRevision(), "node" => $node->getId(), "locale" => $locale, "region" => $region, "section" => $section, "block" => $block, "widget" => $widgetId]}
+
+            {isGranted url=$actionUrl permission="cms.widget.`$widgetName`.`$actionName`" strategy="AND" var="isWidgetActionAllowed"}{/isGranted}
+            {if $isWidgetActionAllowed}
+                {$widgetActions[$actionName] = $actionUrl}
             {/if}
-        {/foreach}
+        {/if}
+    {/foreach}
 
-        {url var="actionUrl" id="cms.node.content.widget.delete" parameters=["site" => $site->getId(), "revision" => $node->getRevision(), "node" => $node->getId(), "locale" => $locale, "region" => $region, "section" => $section, "block" => $block, "widget" => $widgetId]}
-        {isGranted url=$actionUrl}
-            {$widgetDeleteAction = $actionUrl}
-        {/isGranted}
+    {url var="actionUrl" id="cms.node.content.widget.delete" parameters=["site" => $site->getId(), "revision" => $node->getRevision(), "node" => $node->getId(), "locale" => $locale, "region" => $region, "section" => $section, "block" => $block, "widget" => $widgetId]}
+    {isGranted url=$actionUrl permission="cms.widget.`$widgetName`.delete" strategy="AND" var="isWidgetActionAllowed"}{/isGranted}
+    {if $isWidgetActionAllowed}
+        {$widgetDeleteAction = $actionUrl}
+    {/if}
+
+<div class="widget{if !$widgetProperties->isPublished() || !$widgetProperties->isAvailableInLocale($locale)} widget-muted{/if} card {if isset($inheritedWidgets[$widgetId])} inherited{/if} card p-l-1 p-t-1 p-r-1 p-b-1" data-widget="{$widgetId}">
+    <div class="widget-header card-header clearfix">
 
     <div class="clearfix">
         {if $widgetActions || $widgetDeleteAction}
         <div class="btn-group pull-right">
+            {if $widgetActions}
             <div class="btn-group">
                 <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdown{$widgetId}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="{translate key="label.widget.action.properties"}">
                     <span class="fa fa-cog"></span>
@@ -127,6 +132,7 @@
                 {/foreach}
                 </div>
             </div>
+            {/if}
 
             {if isset($widgetActions.style)}
                 <a class="btn btn-secondary btn-sm btn-modal widget-style" data-action="widget-style" href="{$widgetActions.style}" title="{translate key="label.widget.action.style"}">
@@ -158,19 +164,19 @@
         <span class="widget-handle fa fa-arrows"></span>
     </div>
         <div class="widget-title text-left">
-            {call visibilityIcons class="widget-visibility pull-right m-l-1" url=$visibilityAction item=$widgetProperties}
+            {call visibilityIcons class="widget-visibility pull-right m-l-1" action=$visibilityAction item=$widgetProperties}
 
-            <img src="{image src=$widget->getIcon() default="bootstrap4/img/widget.png"}" />
-            {if $widget->getPropertiesCallback()}
-                <a class="name" href="{url id="cms.node.content.widget.properties" parameters=["site" => $site->getId(), "revision" => $node->getRevision(), "node" => $node->getId(), "locale" => $locale, "region" => $region, "section" => $section, "block" => $block, "widget" => $widgetId]}">
-                    {$widgetName}
+            {* <img src="{image src=$widget->getIcon() default="bootstrap4/img/widget.png"}" /> *}
+            {if isset($widgetActions.properties) && $widget->getPropertiesCallback()}
+                <a class="name" href="{$widgetActions.properties}">
+                    {$widgetTitle}
                 </a>
             {else}
-                <span class="name">{$widgetName}</span>
+                <span class="name">{$widgetTitle}</span>
             {/if}
         </div>
     </div>
-    <div class="widget__content">
+    <div class="widget-content">
         {$widget->getPropertiesPreview()}
     </div>
 </div>

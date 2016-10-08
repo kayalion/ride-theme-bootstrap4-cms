@@ -25,7 +25,7 @@
                 {$name|truncate:$truncateLength}
             </a>
             {if $node->getSecurity() !== false}
-                <span class="fa fa-lock{if !$isLocalized} text-danger{/if}" title="{translate key="label.node.tooltip.secured"}"></span>
+                <span class="fa fa-lock text-muted{if !$isLocalized} text-danger{/if}" title="{translate key="label.node.tooltip.secured"}"></span>
             {/if}
             <a href="#" class="dropdown-toggle" data-toggle="dropdown"></a>
             <div class="dropdown-menu" role="menu">

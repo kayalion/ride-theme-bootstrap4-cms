@@ -51,7 +51,7 @@
             {/if}
 
             {include "helper/cms/common"}
-            {call visibilityIcons class="node-visibility pull-right" url=$visibilityAction item=$node}
+            {call visibilityIcons class="node-visibility pull-right" action=$visibilityAction item=$node}
         </div>
     </div>
     {/if}

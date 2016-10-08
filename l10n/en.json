@@ -18,6 +18,12 @@
     "label.node.url.none": "&lt;no frontend available&gt;",
     "label.trash.empty": "The trash of this site is empty.",
     "label.widget.filter": "Type to filter the widgets...",
+    "label.widget.tooltip.localized": "Widget is available in %language%",
+    "label.widget.tooltip.secured": "Widget is secured",
+    "label.widget.tooltip.published": "Widget is published",
+    "label.widget.tooltip.unlocalized": "Widget is not available in %language%",
+    "label.widget.tooltip.unpublished": "Widget is not published",
+    "label.widget.tooltip.unsecured": "Widget is not secured",
     "permission.cms.region.bootstrap4.content.manage": "View the content region (Bootstrap4)",
     "permission.cms.region.bootstrap4.content.section.manage": "Manage the sections in the content region (Bootstrap4)",
     "permission.cms.region.bootstrap4.content.section.style": "Manage the section styles in the content region (Bootstrap4)",
@@ -40,5 +46,6 @@
     "success.site.structure": "The site structure has been saved",
     "success.widget.added": "The widget has been added",
     "success.widget.deleted": "The widget has been deleted",
-    "success.widget.saved": "The widget has been saved"
+    "success.widget.saved": "The widget has been saved",
+    "view.template.default": "Default widget template"
 }
