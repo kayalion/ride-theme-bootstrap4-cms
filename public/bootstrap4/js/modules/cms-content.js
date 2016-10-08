@@ -25,6 +25,10 @@ rideCms.content = (function($, undefined) {
     $document.on('click', '.section-add', function(e) {
       e.preventDefault();
 
+      if ($(this).hasClass('disabled')) {
+        return;
+      }
+
       setLoading(true);
 
       $.post(baseUrl + '/sections', function(html) {
@@ -48,6 +52,11 @@ rideCms.content = (function($, undefined) {
       e.preventDefault();
 
       var $this = $(this);
+
+      if ($this.hasClass('disabled')) {
+        return;
+      }
+
       if (!confirm($this.data('confirm'))) {
         return;
       }
@@ -108,6 +117,11 @@ rideCms.content = (function($, undefined) {
     // open widget add modal through link
     $document.on('click', '.widget-add', function(event) {
       var $button = $(this);
+
+      if ($button.hasClass('disabled')) {
+        return;
+      }
+
       var $block = $button.parents('.block');
       var $section = $button.parents('.section');
 
@@ -161,12 +175,20 @@ rideCms.content = (function($, undefined) {
     $document.on('click', '.widget-add-submit', function(e) {
       e.preventDefault();
 
+      if ($(this).hasClass('disabled')) {
+        return;
+      }
+
       widgetAdd();
     });
 
     // widget add and close button
     $document.on('click', '.widget-add-submit-close', function(e) {
       e.preventDefault();
+
+      if ($(this).hasClass('disabled')) {
+        return;
+      }
 
       widgetAdd();
 
@@ -178,6 +200,11 @@ rideCms.content = (function($, undefined) {
       e.preventDefault();
 
       var $this = $(this);
+
+      if ($this.hasClass('disabled')) {
+        return;
+      }
+
       if (!confirm($this.data('confirm'))) {
           return;
       }
@@ -207,6 +234,10 @@ rideCms.content = (function($, undefined) {
     // submit form of action modal
     $modalActionButtons.on('click', function (e) {
       e.preventDefault();
+
+      if ($(this).hasClass('disabled')) {
+        return;
+      }
 
       var $loadingElement = $modalAction.find('.modal-body,.modal-footer');
 
@@ -395,7 +426,7 @@ rideCms.content = (function($, undefined) {
     setLoading(true);
     setLoading(true, $loadingElement);
 
-		$.post(baseUrl + '/sections/' + section + '/block/' + block + '/widget/' + widget, function(html) {
+	$.post(baseUrl + '/sections/' + section + '/block/' + block + '/widget/' + widget, function(html) {
       $block.find('.block-content').append(html);
 
       initModalActions();
