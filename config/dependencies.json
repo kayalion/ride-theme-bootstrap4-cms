@@ -1,0 +1,9 @@
+{
+    "dependencies": [
+        {
+            "interfaces": ["ride\\library\\template\\theme\\Theme", "ride\\library\\cms\\theme\\Theme"],
+            "class": "ride\\theme\\bootstrap\\Bootstrap4CmsTheme",
+            "id": "bootstrap4"
+        }
+    ]
+}

@@ -1,0 +1,164 @@
+.site-tree {
+  min-height: 100px;
+}
+.node-tree {
+  margin-top: 20px;
+  padding: 0;
+  list-style: none;
+  transition: opacity 250ms;
+}
+.node-tree li {
+  padding: 4px 0;
+  position: relative;
+}
+.node-tree ul {
+  clear: left;
+  list-style: none;
+  padding: 0;
+  margin-left: 25px;
+  position: relative;
+}
+.node-tree ul:before {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 4px;
+  width: 0;
+  border-left: 1px dotted #484848;
+}
+.node-tree ul li:before {
+  content: '';
+  display: block;
+  position: absolute;
+  left: 4px;
+  top: 14px;
+  width: 6px;
+  border-top: 1px dotted #484848;
+}
+
+.node-tree ul li:last-child:before {
+  bottom: 0;
+  background: #fff;
+}
+
+.node-tree .collapsed ul.children {
+  display: none;
+}
+
+.node-tree .node a {
+    color: #373a3c;
+}
+
+/* .node-tree .node-unlocalized > .handle > .icon, */
+/* .node-tree .node-unlocalized > .dropdown > .name { */
+  /* opacity: 0.8; */
+/* } */
+
+.node-tree .node-unpublished > .dropdown > .fa-lock,
+.node-tree .node-unpublished > .handle > .icon,
+.node-tree .node-unpublished > .dropdown > .name {
+  opacity: 0.5;
+}
+
+.node-tree .selected .name {
+  color: #0275d8;
+  font-weight: bold;
+}
+
+.node-tree .selected li .name {
+  color: #373a3c;
+  font-weight: normal;
+}
+
+.node-tree.disabled .handle {
+  cursor: default;
+}
+
+.node-tree .toggle,
+.node-tree .handle,
+.node-tree .dropdown {
+  display: inline-block;
+}
+
+.node .toggle {
+  width: 16px;
+  height: 16px;
+  position: relative;
+}
+
+.node .handle {
+  cursor: move;
+}
+
+.node .toggle,
+.node .icon {
+  display: inline-block;
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.node .icon {
+  margin-right: 4px;
+}
+
+.node a.toggle {
+  background-color: #fff;
+  top: 1px;
+  margin-right: 3px;
+}
+
+.node a.toggle:hover {
+  text-decoration: none;
+}
+
+.node a.toggle:before {
+  content: "\f147";
+}
+.node.collapsed a.toggle:before {
+  content: "\f196";
+}
+
+.node-site .icon:before {
+  content: "\f0ac";
+}
+
+.node-folder .icon:before {
+  content: "\f115";
+}
+
+.node-redirect .icon:before {
+  content: "\f021";
+}
+
+.node-reference .icon:before {
+  content: "\f0c1";
+}
+
+.node-page .icon:before {
+  content: "\f016";
+}
+
+.node-entry .icon:before {
+  content: "\f1c0";
+}
+.node-hidden .icon:before {
+  content: "\f070";
+}
+
+.node-default .icon:before {
+  content: "\f015";
+}
+
+.placeholder {
+  display: block;
+  border: 1px dotted #ccc;
+  background-color: #f7f7f9;
+  height: 20px;
+  border-radius: 0.25rem;
+}
+

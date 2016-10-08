@@ -1,0 +1,57 @@
+{extends file="base/index"}
+
+{block name="head_title" prepend}{if $theme}{translate key="title.theme.edit"} - {$theme->getDisplayName()}{else}{translate key="title.theme.add"}{/if} - {/block}
+
+{block name="content_title" append}
+    <nav class="breadcrumb">
+        <a class="breadcrumb-item" href="{url id="admin"}">
+            {translate key="title.admin.home"}
+        </a>
+        <a class="breadcrumb-item" href="{url id="cms.theme"}">
+            {translate key="title.themes"}
+        </a>
+        <a class="breadcrumb-item" href="{$app.url.request}">
+        {if $theme}
+            {$theme->getDisplayName()}
+        {else}
+            {translate key="title.theme.add"}
+        {/if}
+        </a>
+    </nav>
+
+    <div class="page-header m-b-1">
+        <h1>
+            {translate key="title.themes"}
+            <small class="text-muted">
+        {if $theme}
+            {$theme->getDisplayName()}
+        {else}
+            {translate key="title.theme.add"}
+        {/if}
+            </small>
+        </h1>
+    </div>
+{/block}
+
+{block name="content_body" append}
+    {include file="helper/form.prototype"}
+
+    <form id="{$form->getId()}" class="form-selectize" action="{$app.url.request}" method="POST" role="form">
+        {call formRows form=$form}
+        {call formActions referer=$referer}
+    </form>
+    {if $urlDelete}
+        <a href="{$urlDelete}" class="text-danger">{translate key="button.theme.delete"}</a>
+    {/if}
+{/block}
+
+{block name="styles" append}
+    {style src="bootstrap4/css/selectize.css" media="all"}
+{/block}
+
+{block name="scripts" append}
+    {script src="bootstrap4/js/jquery-ui.js"}
+    {script src="bootstrap4/js/selectize.js"}
+    {script src="bootstrap4/js/parsley.js"}
+    {script src="bootstrap4/js/form.js"}
+{/block}
