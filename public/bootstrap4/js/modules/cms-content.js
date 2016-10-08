@@ -138,7 +138,8 @@ rideCms.content = (function($, undefined) {
     // open widget add modal through double click
     $sections.on('dblclick', '.block-content', function() {
         var $this = $(this);
-        var block = $this.parents('block').data('block');
+
+        var block = $this.parents('.block').data('block');
         var section = $this.parents('.section').data('section');
 
         $('input[name=section]').val(section);
