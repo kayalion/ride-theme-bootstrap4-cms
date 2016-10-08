@@ -135,6 +135,18 @@ rideCms.content = (function($, undefined) {
       $modalWidgetAdd.modal('show');
     });
 
+    // open widget add modal through double click
+    $sections.on('dblclick', '.block-content', function() {
+        var $this = $(this);
+        var block = $this.parents('block').data('block');
+        var section = $this.parents('.section').data('section');
+
+        $('input[name=section]').val(section);
+        $('input[name=block]').val(block);
+
+        $modalWidgetAdd.modal('show');
+    });
+
     // focus filter field when widget add modal shown
     $modalWidgetAdd.on('shown.bs.modal', function () {
       $widgetFilter.focus();
@@ -166,7 +178,7 @@ rideCms.content = (function($, undefined) {
       }
     });
 
-    // enable add button on selection
+    // enable add button on widget selection
     $modalWidgetAdd.on('click', 'label', function() {
       $modalWidgetAddButtons.removeClass('disabled');
     });
