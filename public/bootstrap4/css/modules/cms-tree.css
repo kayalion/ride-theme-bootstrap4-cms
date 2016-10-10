@@ -40,7 +40,7 @@
 
 .node-tree ul li:last-child:before {
   bottom: 0;
-  background: #fff;
+  background: #f5f5f5;
 }
 
 .node-tree .collapsed ul.children {
@@ -107,7 +107,7 @@
 }
 
 .node a.toggle {
-  background-color: #fff;
+  background-color: #f5f5f5;
   top: 1px;
   margin-right: 3px;
 }
@@ -157,7 +157,7 @@
 .placeholder {
   display: block;
   border: 1px dotted #ccc;
-  background-color: #f7f7f9;
+  background-color: #fff;
   height: 20px;
   border-radius: 0.25rem;
 }

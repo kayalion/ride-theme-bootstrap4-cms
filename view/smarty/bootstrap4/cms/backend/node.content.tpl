@@ -104,7 +104,12 @@
                     <p>{translate key="label.widgets.available.description"}</p>
 
                     <div class="form-group">
-                        <input type="text" class="form-control" id="form-widget-filter" placeholder="{"label.widget.filter"|translate|escape}" autocomplete="off" />
+                        <div class="input-group">
+                            <span class="input-group-addon" id="basic-addon1">
+                                <span class="fa fa-search"></span>
+                            </span>
+                            <input type="text" class="form-control" id="form-widget-filter" placeholder="{"label.widget.filter"|translate|escape}" autocomplete="off" />
+                        </div>
                     </div>
 
                     <div class="row">

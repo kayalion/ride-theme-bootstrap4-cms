@@ -112,6 +112,7 @@ rideCms.content = (function($, undefined) {
       $.post(baseUrl + '/sections/' + $section.data('section') + '/layout/' +  $this.data('layout'), function(html) {
         $section.replaceWith(html);
 
+        initModalActions();
         initWidgetOrder(baseUrl, true);
 
         setLoading(false);

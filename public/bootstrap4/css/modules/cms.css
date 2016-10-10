@@ -1,6 +1,14 @@
 @import url(cms-tree.css);
 @import url(cms-content.css);
 
+.page-header .btn-edit {
+  display: none;
+}
+
+.page-header:hover .btn-edit {
+  display: inline;
+}
+
 .visibility-icons:hover {
-    text-decoration: none;
+  text-decoration: none;
 }

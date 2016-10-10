@@ -44,7 +44,13 @@
 {block name="content_body" append}
     {include file="helper/form.prototype"}
 
-    <form id="{$form->getId()}" action="{$app.url.request}" method="POST" role="form">
+    <form id="{$form->getId()}"
+          action="{$app.url.request}" method="POST" role="form"
+          enctype="multipart/form-data"
+          data-node="{$node->getId()}"
+          data-route-prefix="{$site->getRoutePrefixProposal($app.locales, $locale)}"
+          data-url-route-validate="{url id="cms.site.validate-route" parameters=["locale" => $locale, "site" => $site->getId(), "revision" => $site->getRevision()]}"
+    >
         {call formRow form=$form row="name"}
         {call formRow form=$form row="route"}
 
@@ -71,4 +77,8 @@
         {call formRows form=$form}
         {call formActions referer=$referer}
     </form>
+{/block}
+
+{block name="scripts" append}
+    {script src="bootstrap4/js/modules/cms-edit.js"}
 {/block}

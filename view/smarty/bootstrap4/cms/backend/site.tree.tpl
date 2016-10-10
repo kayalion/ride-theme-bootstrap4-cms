@@ -28,7 +28,7 @@
                 <span class="fa fa-lock text-muted{if !$isLocalized} text-danger{/if}" title="{translate key="label.node.tooltip.secured"}"></span>
             {/if}
             <a href="#" class="dropdown-toggle" data-toggle="dropdown"></a>
-            <div class="dropdown-menu" role="menu">
+            <div class="dropdown-menu dropdown-menu-right" role="menu">
 
             {$orderedActions = [0 => [], 1 => [], 2 => [], 3 => []]}
             {foreach $actions as $actionName => $actionUrl}

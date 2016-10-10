@@ -89,6 +89,7 @@
     {$widgetTitle = "widget.`$widgetName`"|translate}
     {$widgetProperties = $widget->getProperties()}
     {$widgetActions = []}
+    {$widgetVisibilityAction = null}
     {$widgetDeleteAction = null}
 
     {foreach $actions as $actionName => $action}
@@ -102,6 +103,10 @@
         {/if}
     {/foreach}
 
+    {if isset($widgetActions.visibility)}
+        {$widgetVisibilityAction = $widgetActions.visibility}
+    {/if}
+
     {url var="actionUrl" id="cms.node.content.widget.delete" parameters=["site" => $site->getId(), "revision" => $node->getRevision(), "node" => $node->getId(), "locale" => $locale, "region" => $region, "section" => $section, "block" => $block, "widget" => $widgetId]}
     {isGranted url=$actionUrl permission="cms.widget.`$widgetName`.delete" strategy="AND" var="isWidgetActionAllowed"}{/isGranted}
     {if $isWidgetActionAllowed}
@@ -111,8 +116,8 @@
 <div class="widget{if !$widgetProperties->isPublished() || !$widgetProperties->isAvailableInLocale($locale)} widget-muted{/if} card {if isset($inheritedWidgets[$widgetId])} inherited{/if} card p-l-1 p-t-1 p-r-1 p-b-1" data-widget="{$widgetId}">
     <div class="widget-header card-header clearfix">
 
+    {if $widgetActions || $widgetDeleteAction}
     <div class="clearfix">
-        {if $widgetActions || $widgetDeleteAction}
         <div class="btn-group pull-right">
             {if $widgetActions}
             <div class="btn-group">
@@ -154,17 +159,16 @@
                 </a>
             {/if}
         </div>
-        {/if}
-
-        {$visibilityAction = null}
-        {if isset($widgetActions.visibility)}
-            {$visibilityAction = $widgetActions.visibility}
-        {/if}
 
         <span class="widget-handle fa fa-arrows"></span>
     </div>
+    {/if}
         <div class="widget-title text-left">
-            {call visibilityIcons class="widget-visibility pull-right m-l-1" action=$visibilityAction item=$widgetProperties}
+        {call visibilityIcons class="widget-visibility pull-right m-l-1" action=$widgetVisibilityAction item=$widgetProperties}
+
+        {if !$widgetActions && !$widgetDeleteAction}
+            <span class="widget-handle fa fa-arrows"></span>
+        {/if}
 
             {* <img src="{image src=$widget->getIcon() default="bootstrap4/img/widget.png"}" /> *}
             {if isset($widgetActions.properties) && $widget->getPropertiesCallback()}

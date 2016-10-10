@@ -44,7 +44,13 @@
 {block name="content_body" append}
     {include file="helper/form.prototype"}
 
-    <form id="{$form->getId()}" class="form-horizontal" action="{$app.url.request}" method="POST" role="form" enctype="multipart/form-data">
+    <form id="{$form->getId()}"
+          action="{$app.url.request}" method="POST" role="form"
+          enctype="multipart/form-data"
+          data-node="{$node->getId()}"
+          data-route-prefix="{$site->getRoutePrefixProposal($app.locales, $locale)}"
+          data-url-route-validate="{url id="cms.site.validate-route" parameters=["locale" => $locale, "site" => $site->getId(), "revision" => $site->getRevision()]}"
+      >
         {call formRow form=$form row="name"}
 
         <p>

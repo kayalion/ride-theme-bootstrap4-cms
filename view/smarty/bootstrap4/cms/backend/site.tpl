@@ -41,3 +41,7 @@
     {/foreach}
     </ul>
 {/block}
+
+{block name="scripts" append}
+    {script src="bootstrap4/js/modules/cms-edit.js"}
+{/block}
