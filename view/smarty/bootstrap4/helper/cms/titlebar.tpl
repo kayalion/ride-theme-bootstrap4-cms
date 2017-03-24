@@ -1,4 +1,4 @@
-<div class="page-header m-b-2">
+<div class="page-header mb-2">
     <nav class="breadcrumb">
         <a class="breadcrumb-item" href="{url id="admin"}">{translate key="title.admin.home"}</a>
         <a class="breadcrumb-item" href="{url id="cms.site"}">{translate key="title.sites"}</a>
@@ -33,8 +33,17 @@
                 <a class="btn btn-secondary btn-sm" href="{$nodeActions.preview}" target="_blank">{translate key="label.node.action.preview"}</a>
             {/if}
 
-            {$url = $node->getUrl($locale, $app.url.script)}
-            <a href="{if isset($nodeActions.go)}{$nodeActions.go}{else}{$url}{/if}" target="_blank">{$url}</a>
+            {$baseUrl = $app.system->getConfig()->get("cms.url.`$site->getId()`.`$locale`", $app.url.script)}
+            {$url = "`$baseUrl``$node->getRoute($locale)`"}
+
+            <small class="text-muted">{$url}</small>
+            &nbsp;
+            <small>
+            <a class="btn btn-secondary btn-xs" href="{if isset($nodeActions.go)}{$nodeActions.go}{else}{$url}{/if}" target="_blank">
+                {translate key="button.view.page"}
+                <span class="fa fa-external-link"></span>
+            </a>
+            </small>
         {/if}
         </div>
         <div class="col-md-4">
@@ -99,7 +108,16 @@
     </div>
 </div>
 
-<ul class="nav nav-tabs m-b-2" role="tablist">
+<ul class="nav nav-tabs mb-2" role="tablist">
+    {url id="cms.{$node->getType()}.edit" parameters=["locale" => $locale, "site" => $site->getId(), "revision" => $node->getRevision(), "node" => $node->getId()] var="urlEdit"}
+    {isGranted url=$urlEdit}
+    <li class="nav-item">
+         <a class="nav-link{if $action == 'edit'} active{/if}" href="{$urlEdit}">
+            {translate key="label.general"}
+         </a>
+    </li>
+    {/isGranted}
+
     {foreach $tabActions as $name => $url}
         {if $name == 'publish'}
             {continue}
@@ -119,14 +137,5 @@
         </a>
     </li>
     {/if}
-
-    {url id="cms.{$node->getType()}.edit" parameters=["locale" => $locale, "site" => $site->getId(), "revision" => $node->getRevision(), "node" => $node->getId()] var="urlEdit"}
-    {isGranted url=$urlEdit}
-    <li class="nav-item">
-         <a class="nav-link{if $action == 'edit'} active{/if}" href="{$urlEdit}">
-            {translate key="label.node.action.edit"}
-         </a>
-    </li>
-    {/isGranted}
 </ul>
 {/if}

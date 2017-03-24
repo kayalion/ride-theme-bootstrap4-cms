@@ -1,7 +1,8 @@
 {* widget: orm.overview action: index; translation: template.orm.overview.list *}
+
 <div class="widget widget-content-overview widget-content-overview-list {$app.cms.properties->getWidgetProperty('style.container')}" id="widget-{$app.cms.widget}">
 {if $title}
-    <h2 class="toc {$app.cms.properties->getWidgetProperty('style.title')}">{$title}</h2>
+    <h2 class="{$app.cms.properties->getWidgetProperty('style.title')}">{$title}</h2>
 {/if}
 
 {if $filters}

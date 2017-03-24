@@ -48,7 +48,7 @@
 
         {if $allowSectionManage}
         <p>
-            <button class="btn btn-secondary section-add">
+            <button class="btn btn-secondary section-add" data-prepend="true">
                 <span class="fa fa-plus"></span>
                 {translate key="button.section.add"}
             </button>
@@ -57,6 +57,7 @@
 
         <div class="sections"
              data-url="{$baseAction}"
+             data-default-breakpoint="{$theme->getDefaultGridBreakpoint()}"
              data-label-success-order="{"success.content.ordered"|translate|escape}"
              data-label-success-section-add="{"success.section.added"|translate|escape}"
              data-label-success-section-delete="{"success.section.deleted"|translate|escape}"
@@ -93,8 +94,8 @@
         <div class="modal-dialog modal-full">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">{translate key="button.close"}</span></button>
                     <h4 class="modal-title" id="modalWidgetAddLabel">{translate key="button.widget.add"}</h4>
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">{translate key="button.close"}</span></button>
                 </div>
                 <div class="modal-body">
                 <form action="#" class="form-widget-add">
@@ -142,8 +143,8 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span> <span class="sr-only">{'button.close'|translate}</span></button>
                     <h4 class="modal-title" id="modalActionLabel"></h4>
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span> <span class="sr-only">{'button.close'|translate}</span></button>
                 </div>
                 <div class="modal-body"></div>
                 <div class="modal-footer">
@@ -156,5 +157,6 @@
 {/block}
 
 {block name="scripts" append}
+    {script src="bootstrap4/js/jquery-scrollTo.js"}
     {script src="bootstrap4/js/modules/cms-content.js"}
 {/block}

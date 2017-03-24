@@ -8,7 +8,7 @@
 
     <li class="node node-{$nodeType}{if $treeNode->isHidden()} node-unpublished{else} node-published{/if}{if $treeNode->isHomePage()} node-default{/if}{if !$isLocalized} node-unlocalized{else} node-localized{/if}" id="node-{$node->getId()}" data-node="{$node->getId()}">
         {if $children}
-        <a href="#" class="toggle"></a>
+        <a class="toggle sidebar-sticky"></a>
         {else}
         <span class="toggle"></span>
         {/if}
@@ -27,7 +27,7 @@
             {if $node->getSecurity() !== false}
                 <span class="fa fa-lock text-muted{if !$isLocalized} text-danger{/if}" title="{translate key="label.node.tooltip.secured"}"></span>
             {/if}
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown"></a>
+            <a href="#" class="dropdown-toggle sidebar-sticky" data-toggle="dropdown"></a>
             <div class="dropdown-menu dropdown-menu-right" role="menu">
 
             {$orderedActions = [0 => [], 1 => [], 2 => [], 3 => []]}

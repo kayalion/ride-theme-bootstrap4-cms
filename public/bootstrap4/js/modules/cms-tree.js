@@ -26,6 +26,7 @@ rideCms.tree = (function($, undefined) {
       $tree = $('.node-tree', $container);
 
       $nodeFilter.removeClass('disabled');
+      $('.btn-expand-all,.btn-collapse-all').removeClass('disabled');
 
       // select current node
       if (selectedNode) {
@@ -42,8 +43,6 @@ rideCms.tree = (function($, undefined) {
       $tree.on('click', '.node .toggle', function(e) {
         e.preventDefault();
 
-        $container.addClass('is-loading');
-
         var $parent = $(this).parents('.node').first();
         var nodeId = $parent.data('node');
 
@@ -51,10 +50,7 @@ rideCms.tree = (function($, undefined) {
 
         if (toggleNodeAction) {
           $.post(toggleNodeAction.replace('%25node%25', nodeId), function() {
-            $container.removeClass('is-loading');
           });
-        } else {
-          $container.removeClass('is-loading');
         }
       });
 
@@ -72,24 +68,22 @@ rideCms.tree = (function($, undefined) {
           var order = $tree.nestedSortable('serialize');
           $tree.nestedSortable('destroy')
 
-          $container.addClass('is-loading');
+          rideApp.common.setLoading(true, $container);
 
           $.post(orderAction, {data: order}, function(data) {
             $tree.nestedSortable(nestedSortableConfig)
 
-            $container.removeClass('is-loading');
-
+            rideApp.common.setLoading(false, $container);
             rideApp.common.notifySuccess($tree.data('label-success-save'));
           }).fail(function() {
-            $container.removeClass('is-loading');
-
+            rideApp.common.setLoading(false, $container);
             rideApp.common.notifyError($tree.data('label-error-save'));
           });
         }
       };
       $tree.nestedSortable(nestedSortableConfig);
 
-      $container.removeClass('is-loading');
+      rideApp.common.setLoading(false, $container);
     });
 
     // collapse all nodes
@@ -97,8 +91,6 @@ rideCms.tree = (function($, undefined) {
       if (!toggleAllAction) {
         return;
       }
-
-      $container.addClass('is-loading');
 
       var nodes = [];
       var $expandedNodes = $tree.find('.node:not(.node-site):not(.collapsed)')
@@ -112,12 +104,9 @@ rideCms.tree = (function($, undefined) {
 
         nodes.push($(this).data('node'));
       });
+      $expandedNodes.addClass('collapsed');
 
-      $.post(toggleAllAction, {nodes: nodes}, function() {
-        $expandedNodes.addClass('collapsed');
-
-        $container.removeClass('is-loading');
-      });
+      $.post(toggleAllAction, {nodes: nodes});
     });
 
     // expand all nodes
@@ -126,20 +115,15 @@ rideCms.tree = (function($, undefined) {
         return;
       }
 
-      $container.addClass('is-loading');
-
       var nodes = [];
       var $collapsedNodes = $tree.find('.node:not(.node-site).collapsed')
 
       $collapsedNodes.each(function() {
         nodes.push($(this).data('node'));
       });
+      $collapsedNodes.removeClass('collapsed');
 
-      $.post(toggleAllAction, {nodes: nodes}, function() {
-        $collapsedNodes.removeClass('collapsed');
-
-        $container.removeClass('is-loading');
-      });
+      $.post(toggleAllAction, {nodes: nodes});
     });
 
     // filter nodes

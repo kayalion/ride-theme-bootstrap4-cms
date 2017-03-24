@@ -58,14 +58,3 @@
         </div>
     </div>
 </form>
-
-
-    {call formRows form=$form}
-
-    <div class="form-group">
-        <input type="submit" class="btn btn-primary" value="{translate key="button.save"}" />
-        <a class="btn" href="{url id="cms.node.content.region" parameters=["locale" => $locale, "site" => $site->getId(), "revision" => $node->getRevision(), "node" => $node->getId(), "region" => $region]}">
-            {translate key="button.cancel"}
-        </a>
-    </div>
-</form>

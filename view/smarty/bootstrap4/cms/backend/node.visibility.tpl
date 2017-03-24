@@ -29,7 +29,7 @@
 
     {include file="helper/form.prototype"}
 
-    <form id="{$form->getId()}" class="form-selectize" action="{$app.url.request}" method="POST" role="form">
+    <form id="{$form->getId()}" action="{$app.url.request}" method="POST" role="form">
         {call formRows form=$form}
         {call formActions referer=$referer}
     </form>

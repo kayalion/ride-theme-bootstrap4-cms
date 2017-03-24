@@ -25,6 +25,7 @@
         breadcrumbUrl=$app.url.request
         breadcrumbLabel=$subtitle
         action="content"
+        disableNodeActions=true
     }
 {/block}
 

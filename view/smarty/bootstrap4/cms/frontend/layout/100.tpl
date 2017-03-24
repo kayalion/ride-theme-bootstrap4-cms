@@ -1,12 +1,6 @@
 {function name="layout_100" section=null widgets=null}
+    {$breakpoint = $app.cms.node->getSectionGridBreakpoint($region, $section, 'md')}
     <div class="row section section-{$section} section-{$region}-{$section} {$style}">
-    {$block = '1'}
-        <div class="col-sm-12 block block-{$block} block-{$region}-{$section}-{$block}" data-section="{$section}" data-block="{$block}">
-    {if isset($widgets[$block])}
-        {foreach $widgets[$block] as $widget}
-            {$widget}
-        {/foreach}
-    {/if}
-        </div>
+        {call layout_block region=$region section=$section block="1" style="col-`$breakpoint`-12"}
     </div>
 {/function}

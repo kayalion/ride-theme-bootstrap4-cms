@@ -12,7 +12,7 @@
         </a>
     </nav>
 
-    <div class="page-header m-b-1">
+    <div class="page-header mb-2">
         <h1>{translate key="title.sites"}</h1>
     </div>
 {/block}

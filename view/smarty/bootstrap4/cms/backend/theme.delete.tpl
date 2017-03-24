@@ -18,7 +18,7 @@
         </a>
     </nav>
 
-    <div class="page-header m-b-1">
+    <div class="page-header mb-2">
         <h1>
             {$theme->getDisplayName()}
             <small class="text-muted">

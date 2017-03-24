@@ -1,3 +1,7 @@
+{if !$node->getId()}
+    {$enableSidebar = false}
+{/if}
+
 {extends file="cms/backend/index"}
 
 {block name="head_title" prepend}{if $node->getId()}{translate key="title.site.edit"}{else}{translate key="title.site.add"}{/if} | {/block}

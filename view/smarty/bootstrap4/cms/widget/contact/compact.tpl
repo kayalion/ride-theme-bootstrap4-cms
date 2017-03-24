@@ -1,4 +1,4 @@
-{* widget: contact action: index; translation: widget.contact *}
+{* widget: contact action: index; translation: view.contact.compact *}
 <div class="widget widget-contact {$app.cms.properties->getWidgetProperty('style.container')}" id="widget-{$app.cms.widget}">
     {include file="base/form.prototype"}
 

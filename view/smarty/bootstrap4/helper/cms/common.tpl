@@ -27,9 +27,9 @@
 
         {foreach $app.locales as $localeCode => $locale}
             {if $item->isAvailableInLocale($localeCode)}
-                <span class="tag tag-success" title="{translate key="label.`$type`.tooltip.localized" language=$locale->getName()}">{$localeCode}</span>
+                <span class="badge badge-success" title="{translate key="label.`$type`.tooltip.localized" language=$locale->getName()}">{$localeCode}</span>
             {else}
-                <span class="tag tag-danger" title="{translate key="label.`$type`.tooltip.unlocalized" language=$locale->getName()}">{$localeCode}</span>
+                <span class="badge badge-danger" title="{translate key="label.`$type`.tooltip.unlocalized" language=$locale->getName()}">{$localeCode}</span>
             {/if}
         {/foreach}
     {/if}

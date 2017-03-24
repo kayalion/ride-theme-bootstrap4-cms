@@ -11,8 +11,19 @@
 
     {if isset($app.cms.context.localizedUrls)}
         {foreach $app.cms.context.localizedUrls as $localizedUrl}
-            <link rel="alternate" hreflang="{$localizedUrl.locale}" href="{$localizedUrl.url}" />
+            <link rel="alternate" hreflang="{$localizedUrl.locale|replace:"_":"-"}" href="{$localizedUrl.url}"/>
         {/foreach}
+    {/if}
+
+    {if isset($app.cms.context.pagination)}
+        {$paginationUrl = $app.cms.context.pagination->getPreviousLink()}
+        {if $paginationUrl}
+            <link rel="prev" href="{$paginationUrl}"/>
+        {/if}
+        {$paginationUrl = $app.cms.context.pagination->getNextLink()}
+        {if $paginationUrl}
+            <link rel="next" href="{$paginationUrl}"/>
+        {/if}
     {/if}
 
     {if isset($app.cms.node)}
@@ -28,31 +39,7 @@
 {block name="body_attributes" append} class="node-{$app.cms.node->getId()}"{/block}
 
 {block name="container"}
-    {foreach $layouts as $layout}
-        {include file=$layout->getFrontendResource() inline}
-    {/foreach}
-
-    {function name="region" region=null class=null}
-        {if isset($widgets.$region)}
-        <div class="{$class}">
-            {foreach $regions.$region as $section => $layout}
-                {if isset($widgets.$region.$section)}
-                    {$functionName = "layout-`$layout`"|replace:"-":"_"}
-                    {$style = $app.cms.node->getSectionStyle($region, $section)}
-                    {$title = $app.cms.node->getSectionTitle($region, $section, $app.locale)}
-                    {$isFullWidth = $app.cms.node->isSectionFullWidth($region, $section)}
-
-                    <div class="container{if $isFullWidth}-fluid{/if} section {$style}">
-                        {if $title}
-                            <h2 class="section-title">{$title}</h2>
-                        {/if}
-                        {call $functionName section=$section widgets=$widgets.$region.$section style=$style}
-                    </div>
-                {/if}
-            {/foreach}
-        </div>
-        {/if}
-    {/function}
+    {include "helper/cms/frontend"}
 
     {call region region="header" class="region region-header"}
     {call region region="menu" class="region region-menu"}

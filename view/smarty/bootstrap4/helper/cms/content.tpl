@@ -3,7 +3,7 @@
 *}
 
 {function name="sectionPanel" site=null node=null section=null layouts=null layout=null widgets=null inheritedWidgets=null actions=null}
-<div class="section panel panel-default card" data-section="{$section}">
+<div class="section panel panel-default card mb-3" data-section="{$section}">
     <div class="card-header">
         {call sectionHeader layouts=$layouts layout=$layout}
     </div>
@@ -15,9 +15,11 @@
 
 {function name="sectionHeader" layouts=null layout=null}
 {$sectionTitle = $node->getSectionTitle($region, $section, $locale)}
+{$sectionGridBreakpoint = $node->getSectionGridBreakpoint($region, $section)}
+{$isFullWidth = $node->isSectionFullWidth($region, $section)}
 <div class="row">
     <div class="col-md-8">
-        <span class="section-handle fa fa-arrows m-r-1"></span>
+        <span class="section-handle fa fa-arrows mr-3"></span>
         <span class="section-layouts">
         {foreach $layouts as $l}
             {$layoutName = $l->getName()}
@@ -30,7 +32,7 @@
     <div class="col-md-4">
         <div class="btn-group pull-right section-actions">
             <a class="btn btn-secondary btn-sm btn-modal section-properties" data-action="section-properties" href="{url id="cms.node.content.section.properties" parameters=["site" => $site->getId(), "revision" => $node->getRevision(), "node" => $node->getId(), "locale" => $locale, "region" => $region, "section" => $section]}?referer={$app.url.request|urlencode}" title="{translate key="label.widget.action.properties"}">
-                <span class="fa fa-cog{if $node->isSectionFullWidth($region, $section)} text-primary{/if}"></span>
+                <span class="fa fa-cog{if $sectionTitle || $isFullWidth || $sectionGridBreakpoint} text-primary{/if}"></span>
             </a>
             {isGranted permission="cms.region.`$node->getTheme()`.`$region`.section.style"}
             <a class="btn btn-secondary btn-sm btn-modal section-style" data-action="section-style" href="{url id="cms.node.content.section.style" parameters=["site" => $site->getId(), "revision" => $node->getRevision(), "node" => $node->getId(), "locale" => $locale, "region" => $region, "section" => $section]}?referer={$app.url.request|urlencode}" title="{translate key="label.widget.action.style"}">
@@ -118,7 +120,7 @@
 
     {if $widgetActions || $widgetDeleteAction}
     <div class="clearfix">
-        <div class="btn-group pull-right">
+        <div class="btn-group float-right">
             {if $widgetActions}
             <div class="btn-group">
                 <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdown{$widgetId}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="{translate key="label.widget.action.properties"}">
@@ -164,7 +166,7 @@
     </div>
     {/if}
         <div class="widget-title text-left">
-        {call visibilityIcons class="widget-visibility pull-right m-l-1" action=$widgetVisibilityAction item=$widgetProperties}
+        {call visibilityIcons class="widget-visibility float-right ml-2" action=$widgetVisibilityAction item=$widgetProperties}
 
         {if !$widgetActions && !$widgetDeleteAction}
             <span class="widget-handle fa fa-arrows"></span>

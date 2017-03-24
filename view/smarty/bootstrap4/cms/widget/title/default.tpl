@@ -1,4 +1,12 @@
-{* widget: title; action: index; translation: view.title.default *}
+{* widget: title; action: index; translation: view.template.default *}
 <div class="widget widget-title {$app.cms.properties->getWidgetProperty('style.container')}" id="widget-{$app.cms.widget}">
-    <h1 class="{$app.cms.properties->getWidgetProperty('style.title')}">{$app.cms.context.title.node}</h1>
+    {if $title === null}
+        {$title = $app.cms.context.title.node}
+    {/if}
+
+    {if $anchor}
+    <a name="{$anchor}"></a>
+    {/if}
+
+    <h{$heading} class="{$app.cms.properties->getWidgetProperty('style.title')}">{$title}</h{$heading}>
 </div>

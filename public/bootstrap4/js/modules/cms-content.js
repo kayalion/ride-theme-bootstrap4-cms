@@ -1,6 +1,7 @@
 var rideCms = rideCms || {};
 
 rideCms.content = (function($, undefined) {
+  var $window = $(window);
   var $document = $(document);
   var $sections = $('.sections');
   var $sectionContainer = $('.section-container');
@@ -14,17 +15,20 @@ rideCms.content = (function($, undefined) {
   var baseUrl = $sections.data('url');
 
   var _initialize = function() {
-    $(window).keydown(function(e) {
+    $window.keydown(function(e) {
       if (e.keyCode == 13) {
         e.preventDefault();
 
         return false;
       }
     });
+    $window.on('resize', function() {
+      resizeModal($('.modal.in .modal-body'));
+    });
 
     // auto submit region change
     $document.on('change', 'select[name=region]', function() {
-      setLoading(true);
+      rideApp.common.setLoading(true, $sectionContainer);
 
       $('#form-region-select').submit();
     });
@@ -33,21 +37,34 @@ rideCms.content = (function($, undefined) {
     $document.on('click', '.section-add', function(e) {
       e.preventDefault();
 
-      if ($(this).hasClass('disabled')) {
+      var $this = $(this);
+
+      if ($this.hasClass('disabled')) {
         return;
       }
 
-      setLoading(true);
+      var prepend = "";
+      if ($this.data('prepend')) {
+          prepend += "?prepend=1"
+      }
 
-      $.post(baseUrl + '/sections', function(html) {
-        $sections.append(html);
+      rideApp.common.setLoading(true, $sectionContainer);
+
+      $.post(baseUrl + '/sections' + prepend, function(html) {
+        if (prepend) {
+          $sections.prepend(html);
+        } else {
+          $sections.append(html);
+        }
 
         initModalActions();
         initWidgetOrder(baseUrl, true);
 
-        $('.section:last', $sections).scrollTop();
+        if (prepend == "") {
+          $window.scrollTo($('.section:last', $sections));
+        }
 
-        setLoading(false);
+        rideApp.common.setLoading(false, $sectionContainer);
 
         rideApp.common.notifySuccess($sections.data('label-success-section-add'));
       }).fail(function() {
@@ -69,7 +86,7 @@ rideCms.content = (function($, undefined) {
         return;
       }
 
-      setLoading(true);
+      rideApp.common.setLoading(true, $sectionContainer);
 
       var $section = $this.closest('.section');
       $.ajax({
@@ -80,7 +97,7 @@ rideCms.content = (function($, undefined) {
 
           initWidgetOrder(baseUrl, true);
 
-          setLoading(false);
+          rideApp.common.setLoading(false, $sectionContainer);
 
           rideApp.common.notifySuccess($sections.data('label-success-section-delete'));
         },
@@ -104,7 +121,7 @@ rideCms.content = (function($, undefined) {
     $document.on('click', '.section-layouts > a', function(e) {
       e.preventDefault();
 
-      setLoading(true);
+      rideApp.common.setLoading(true, $sectionContainer);
 
       var $this = $(this);
       var $section = $this.closest('.section');
@@ -115,7 +132,7 @@ rideCms.content = (function($, undefined) {
         initModalActions();
         initWidgetOrder(baseUrl, true);
 
-        setLoading(false);
+        rideApp.common.setLoading(false, $sectionContainer);
 
         rideApp.common.notifySuccess($sections.data('label-success-section-save'));
       }).fail(function() {
@@ -241,7 +258,7 @@ rideCms.content = (function($, undefined) {
           return;
       }
 
-      setLoading(true);
+      rideApp.common.setLoading(true, $sectionContainer);
 
       var $section = $this.closest('.section');
       var $block = $this.closest('.block');
@@ -253,7 +270,7 @@ rideCms.content = (function($, undefined) {
         success: function(result) {
           $widget.remove();
 
-          setLoading(false);
+          rideApp.common.setLoading(false, $sectionContainer);
 
           rideApp.common.notifySuccess($sections.data('label-success-widget-delete'));
         },
@@ -283,6 +300,16 @@ rideCms.content = (function($, undefined) {
     initWidgetOrder(baseUrl);
   };
 
+  var resizeModal = function($element) {
+    var offset = 220;
+    var windowHeight = $window.height();
+    var elementHeight = $element.height();
+
+    if (elementHeight + offset >= windowHeight) {
+      $element.height(windowHeight - offset);
+    }
+  };
+
   // open modal actions in action modal
   var initModalActions = function() {
     $sections.find('.btn-modal:not(.is-initialized)').addClass('is-initialized').on('click', function (e) {
@@ -295,7 +322,7 @@ rideCms.content = (function($, undefined) {
         return;
       }
 
-      setLoading(true);
+      rideApp.common.setLoading(true, $sectionContainer);
 
       $modalAction.data('action', $action.data('action'));
       $modalAction.data('section', $action.parents('.section').data('section'));
@@ -312,8 +339,9 @@ rideCms.content = (function($, undefined) {
         });
 
         $modalAction.modal('show');
+        resizeModal($modalAction.find('.modal-content'));
 
-        setLoading(false);
+        rideApp.common.setLoading(false, $sectionContainer);
       });
     });
   };
@@ -325,8 +353,8 @@ rideCms.content = (function($, undefined) {
 
     var $loadingElement = $modalAction.find('.modal-body,.modal-footer');
 
-    setLoading(true, $loadingElement);
-    setLoading(true);
+    rideApp.common.setLoading(true, $loadingElement);
+    rideApp.common.setLoading(true, $sectionContainer);
 
     var action = $modalAction.data('action');
     var section = $modalAction.data('section');
@@ -347,7 +375,11 @@ rideCms.content = (function($, undefined) {
 
           initModalActions();
 
-          if ($form.find('input[name=isFullWidth]').prop('checked')) {
+          var isFullWidth = $form.find('input[name=isFullWidth]').prop('checked');
+          var sectionGridBreakpoint = $form.find('input[name=gridBreakpoint]:checked').val();
+          var defaultGridBreakpoint = $sections.data('default-breakpoint');
+
+          if (sectionTitle != '' || isFullWidth || sectionGridBreakpoint != defaultGridBreakpoint) {
             $sections.find('.section[data-section="' + section + '"] .section-properties .fa').addClass('text-primary');
           } else {
             $sections.find('.section[data-section="' + section + '"] .section-properties .fa').removeClass('text-primary');
@@ -355,7 +387,7 @@ rideCms.content = (function($, undefined) {
 
           break;
         case 'section-style':
-          if ($form.find('input[name=style]').val()) {
+          if ($form.find('input[type=radio]:checked').val()) {
             $sections.find('.section[data-section="' + section + '"] .section-style .fa').addClass('text-primary');
           } else {
             $sections.find('.section[data-section="' + section + '"] .section-style .fa').removeClass('text-primary');
@@ -364,7 +396,7 @@ rideCms.content = (function($, undefined) {
           break;
         case 'widget-style':
           var value = '';
-          $form.find('input[type=text]').each(function() {
+          $form.find('input[type=radio]:checked').each(function() {
             value += $(this).val();
           });
 
@@ -379,8 +411,8 @@ rideCms.content = (function($, undefined) {
 
       $modalAction.modal('hide');
 
-      setLoading(false, $loadingElement);
-      setLoading(false);
+      rideApp.common.setLoading(false, $loadingElement);
+      rideApp.common.setLoading(false, $sectionContainer);
 
       if (widget) {
         rideApp.common.notifySuccess($sections.data('label-success-widget-save'));
@@ -430,7 +462,7 @@ rideCms.content = (function($, undefined) {
 
   // perform the order update to the cms
   var updateOrder = function(baseUrl) {
-    setLoading(true);
+    rideApp.common.setLoading(true, $sectionContainer);
 
     // generate overview of the widgets in their blocks and sections
     var order = {};
@@ -460,7 +492,7 @@ rideCms.content = (function($, undefined) {
 
     // post the order the cms
     $.post(baseUrl + '/order', { order: order }, function(data) {
-      setLoading(false);
+      rideApp.common.setLoading(false, $sectionContainer);
 
       rideApp.common.notifySuccess($sections.data('label-success-order'));
     }).fail(function() {
@@ -483,7 +515,7 @@ rideCms.content = (function($, undefined) {
 
     var $loadingElement = $modalWidgetAdd.find('.modal-content');
 
-    setLoading(true);
+    rideApp.common.setLoading(true, $sectionContainer);
     setLoading(true, $loadingElement);
 
 	  $.post(baseUrl + '/sections/' + section + '/block/' + block + '/widget/' + widget, function(html) {
@@ -493,7 +525,7 @@ rideCms.content = (function($, undefined) {
       initWidgetOrder(baseUrl, true);
 
       setLoading(false, $loadingElement);
-      setLoading(false);
+      rideApp.common.setLoading(false, $sectionContainer);
 
       rideApp.common.notifySuccess($sections.data('label-success-widget-add'));
     }).fail(function() {

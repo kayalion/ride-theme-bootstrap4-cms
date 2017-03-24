@@ -2,7 +2,7 @@
 
 {block name="sidebar"}
     {if isset($nodeCreateActions)}
-    <div class="btn-group btn-block m-b-1">
+    <div class="btn-group btn-block mb-2">
         <div class="btn-group">
             <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown">
                 <span class="fa fa-plus"></span>
@@ -35,11 +35,11 @@
     </div>
 
     <div class="btn-group">
-    <button class="btn btn-secondary btn-sm btn-expand-all">
+    <button class="btn btn-secondary btn-sm btn-expand-all disabled">
         <span class="fa fa-plus-square-o"></span>
         {translate key="button.expand.all"}
     </button>
-    <button class="btn btn-secondary btn-sm btn-collapse-all">
+    <button class="btn btn-secondary btn-sm btn-collapse-all disabled">
         <span class="fa fa-minus-square-o"></span>
         {translate key="button.collapse.all"}
     </button>
@@ -60,6 +60,7 @@
 {/block}
 
 {block name="styles" append}
+    {style src="bootstrap4/css/bootstrap-datepicker.css" media="all"}
     {style src="bootstrap4/css/selectize.css" media="all"}
     {style src="bootstrap4/css/modules/cms.css" media="all"}
 {/block}
@@ -68,8 +69,9 @@
     {script src="bootstrap4/js/jquery-ui.js"}
     {script src="bootstrap4/js/jquery-ui-nested-sortable.js"}
     {script src="bootstrap4/js/jquery-bootstrap-growl.js"}
-    {script src="bootstrap4/js/parsley.js"}
+    {script src="bootstrap4/js/bootstrap-datepicker.js"}
     {script src="bootstrap4/js/selectize.js"}
+    {script src="bootstrap4/js/parsley.js"}
     {script src="bootstrap4/js/form.js"}
     {script src="bootstrap4/js/modules/cms-tree.js"}
 {/block}
