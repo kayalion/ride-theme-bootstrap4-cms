@@ -1,5 +1,5 @@
 {* widget: text; action: index; translation: widget.text *}
-<div class="widget widget-text row-fluid clearfix {$app.cms.properties->getWidgetProperty('style.container')}" id="widget-{$app.cms.widget}">
+<div class="widget widget-text clearfix {$app.cms.properties->getWidgetProperty('style.container')}" id="widget-{$app.cms.widget}">
 {if $title}
     <h2 class="toc {$app.cms.properties->getWidgetProperty('style.title')}">{$title|text}</h2>
 {/if}
@@ -15,6 +15,7 @@
                 <a href="{$callToAction->getUrl()}" class="btn btn-default cta{if $callToAction->getIcon()} cta-{$callToAction->getIcon()}{/if}">{$callToAction->getLabel()|text}</a>
             {/foreach}
         {else}
+        <div class="row">
             <div class="col-md-6">
                 {if $imageAlignment == 'left'}
                     <img src="{image src=$image}" class="img-responsive" />
@@ -35,6 +36,7 @@
                     <img src="{image src=$image}" class="img-responsive" />
                 {/if}
             </div>
+        </div>
         {/if}
     {else}
         <img src="{image src=$image}" class="img-responsive" />
@@ -44,8 +46,12 @@
     {/if}
 {else}
     {$html|text}
+    {if $callToActions}
+    <div class="btn-group">
     {foreach $callToActions as $callToAction}
-        <a href="{$callToAction->getUrl()}" class="btn btn-default cta{if $callToAction->getType()} cta-{$callToAction->getType()}{/if}">{$callToAction->getLabel()|text}</a>
+        <a href="{$callToAction->getUrl()}" class="btn btn-secondary cta{if $callToAction->getType()} cta-{$callToAction->getType()}{/if}">{$callToAction->getLabel()|text}</a>
     {/foreach}
+    </div>
+    {/if}
 {/if}
 </div>

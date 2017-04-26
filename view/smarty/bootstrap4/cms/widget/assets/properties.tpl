@@ -1,37 +1,21 @@
-{include file="base/form.prototype"}
+{include file="helper/form.prototype"}
 
 <form id="{$form->getId()}" class="form-horizontal" action="{$app.url.request}" method="POST" role="form">
-    <fieldset>
-        <div class="tab">
-            <div class="tabbable">
-                <ul class="nav nav-tabs">
-                    <li class="active"><a href="#tabWidget" data-toggle="tab">{translate key="widget.assets"}</a></li>
-                    <li><a href="#tabView" data-toggle="tab">{translate key="title.view"}</a></li>
-                </ul>
-            </div>
+    <ul class="nav nav-tabs mb-2">
+        <li class="nav-item"><a class="nav-link active" href="#general" data-toggle="tab">{translate key="widget.assets"}</a></li>
+        <li class="nav-item"><a class="nav-link" href="#view" data-toggle="tab">{translate key="title.view"}</a></li>
+    </ul>
 
-            <div class="tab-content">
-                <div id="tabWidget" class="tab-pane active">
-                    {call formRow form=$form row="display"}
-                    {call formRow form=$form row="folder"}
-                    {call formRow form=$form row="assets"}
-                    {call formRow form=$form row="unlocalized"}
-                </div>
-
-                <div id="tabView" class="tab-pane">
-                    {call formRow form=$form row="template"}
-                    {call formRow form=$form row="title"}
-                </div>
-            </div>
+    <div class="tab-content">
+        <div id="view" class="tab-pane">
+            {call formRow form=$form row="template"}
+            {call formRow form=$form row="title"}
         </div>
-
-        {call formRows form=$form}
-
-        <div class="form-group">
-            <div class="col-lg-offset-2 col-lg-10">
-                <input type="submit" name="action" class="btn btn-default" value="{translate key="button.save"}" />
-                <a class="btn" href="{url id="cms.node.content.region" parameters=["locale" => $locale, "site" => $site->getId(), "revision" => $node->getRevision(), "node" => $node->getId(), "region" => $region]}">{translate key="button.cancel"}</a>
-            </div>
+        <div id="general" class="tab-pane active">
+            {call formRows form=$form}
         </div>
-    </fieldset>
+    </div>
+
+    {url var="referer" id="cms.node.content.region" parameters=["locale" => $locale, "site" => $site->getId(), "revision" => $node->getRevision(), "node" => $node->getId(), "region" => $region]}
+    {call formActions referer=$referer}
 </form>

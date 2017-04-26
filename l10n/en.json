@@ -8,6 +8,7 @@
     "button.expand.all": "Expand all",
     "button.names.alternate": "Alternate names",
     "button.publish": "Publish",
+    "button.view.page": "View this page",
 
     "dashboard.orm.contact.description": "View the submissions of the contact form.",
     "dashboard.orm.texts.description": "Manage the texts which are used on your site.",
@@ -22,6 +23,7 @@
     "error.widget.deleted": "Could not delete the widget",
     "error.widget.saved": "Could not save the widget",
 
+    "label.general": "General",
     "label.node.filter": "Type to filter the pages...",
     "label.node.tooltip.localized": "Page is available in %language%",
     "label.node.tooltip.secured": "Page is secured",

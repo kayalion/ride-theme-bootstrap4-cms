@@ -41,18 +41,18 @@
 {block name="container"}
     {include "helper/cms/frontend"}
 
-    {call region region="header" class="region region-header"}
-    {call region region="menu" class="region region-menu"}
-    {call region region="title" class="region region-title"}
+    {call region region="header" class="region region-header clearfix"}
+    {call region region="menu" class="region region-menu clearfix"}
+    {call region region="title" class="region region-title clearfix"}
     {if isset($app.messages)}
         {include file="helper/messages" messages=$app.messages}
     {/if}
-    {call region region="content" class="region region-content"}
-    {call region region="footer" class="row region region-footer"}
+    {call region region="content" class="region region-content clearfix"}
+    {call region region="footer" class="region region-footer clearfix"}
 {/block}
 
 {block name="styles" append}
-    {style src="bootstrap4/css/modules/cms-front.css" media="all"}
+    {style src="`$app.cms.node->getTheme()`/css/main.css" media="all"}
 {/block}
 
 {block name="scripts" append}

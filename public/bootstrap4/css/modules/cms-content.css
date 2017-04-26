@@ -31,6 +31,10 @@
   border: 2px solid #0275d8;
 }
 
+.section > .card-header {
+    background-color: #e7edf9;
+}
+
 .section .card-block {
   padding: 0 0 0 1em;
 }
@@ -65,7 +69,7 @@
 
 .block-content {
   min-height: 3em;
-  margin-bottom: 4em;
+  margin-bottom: 4.3em;
   height: 100%;
 }
 
@@ -77,10 +81,27 @@
   padding: 0 1em;
 }
 
+.widget {
+  margin-bottom: 1rem;
+}
+
 .widget-header {
   /* margin: -1em -1em 1em -1em; */
+  border-bottom: none;
 }
 
 .widget-content {
+    border-top: 1px solid rgba(0,0,0,0.125);
     padding: 1em;
+}
+
+.widget a.properties {
+    color: #292b2c;
+    text-decoration: none;
+    display: block;
+}
+
+.widget a.properties:hover {
+    color: #777;
+    text-decoration: underline;
 }

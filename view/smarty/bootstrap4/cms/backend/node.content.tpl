@@ -57,7 +57,7 @@
 
         <div class="sections"
              data-url="{$baseAction}"
-             data-default-breakpoint="{$theme->getDefaultGridBreakpoint()}"
+             data-default-breakpoint="{if isset($theme)}{$theme->getDefaultGridBreakpoint()}{else}md{/if}"
              data-label-success-order="{"success.content.ordered"|translate|escape}"
              data-label-success-section-add="{"success.section.added"|translate|escape}"
              data-label-success-section-delete="{"success.section.deleted"|translate|escape}"

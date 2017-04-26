@@ -53,11 +53,13 @@
                     {translate key="label.regions"}
                 </a>
             </li>
+            {if $form->hasRow("layouts")}
             <li class="nav-item">
                 <a class="nav-link" href="#layouts" data-toggle="tab">
                     {translate key="label.layouts"}
                 </a>
             </li>
+            {/if}
         </ul>
 
         <div class="tab-content">
@@ -67,9 +69,11 @@
             <div id="regions" class="tab-pane">
                 {call formRow form=$form row="regions"}
             </div>
+            {if $form->hasRow("layouts")}
             <div id="layouts" class="tab-pane">
                 {call formRow form=$form row="layouts"}
             </div>
+            {/if}
             <div id="general" class="tab-pane active">
                 {call formRows form=$form}
             </div>

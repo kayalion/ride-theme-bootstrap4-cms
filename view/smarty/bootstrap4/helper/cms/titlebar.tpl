@@ -1,4 +1,4 @@
-<div class="page-header mb-2">
+<div class="page-header mb-3">
     <nav class="breadcrumb">
         <a class="breadcrumb-item" href="{url id="admin"}">{translate key="title.admin.home"}</a>
         <a class="breadcrumb-item" href="{url id="cms.site"}">{translate key="title.sites"}</a>

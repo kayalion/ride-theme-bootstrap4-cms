@@ -8,11 +8,11 @@
     {foreach $assets as $asset}
         {if $asset->getType() == 'video'}
             <a href="{$asset->getValue()|replace:"watch?v=":"embed/"}?rel=0wmode=transparent" rel="colorbox" class="colorbox-video" title="{$asset->getName()|escape}">
-                <img src="{image src=$asset->getThumbnail() transformation="resize" width=800 height=800}" class="img-responsive">
+                <img src="{image src=$asset->getThumbnail() transformation="resize" width=800 height=800}" class="img-fluid">
             </a>
         {else}
             <a href="{image src=$asset->getValue()}" rel="colorbox" class="colorbox" title="{$asset->getName()|escape}">
-                <img src="{image src=$asset->getValue() transformation="resize" width=800 height=800}" class="img-responsive">
+                <img src="{image src=$asset->getValue() transformation="resize" width=800 height=800}" class="img-fluid">
             </a>
         {/if}
     {/foreach}

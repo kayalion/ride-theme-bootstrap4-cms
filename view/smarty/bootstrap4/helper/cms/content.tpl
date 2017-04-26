@@ -182,8 +182,17 @@
             {/if}
         </div>
     </div>
+    {$propertiesPreview = $widget->getPropertiesPreview()}
+    {if $propertiesPreview}
     <div class="widget-content">
-        {$widget->getPropertiesPreview()}
+        {if isset($widgetActions.properties) && $widget->getPropertiesCallback()}
+            <a class="properties" href="{$widgetActions.properties}">
+                {$propertiesPreview}
+            </a>
+        {else}
+            {$propertiesPreview}
+        {/if}
     </div>
+    {/if}
 </div>
 {/function}
